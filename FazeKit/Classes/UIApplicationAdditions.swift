@@ -10,7 +10,8 @@ import Foundation
 private var activityCount: Int = 0
 
 public extension UIApplication {
-    static func incrementNetworkActivityIndicator() {
+	#if os(iOS)
+	static func incrementNetworkActivityIndicator() {
         DispatchQueue.main.async {
             activityCount += 1
             self.shared.isNetworkActivityIndicatorVisible = true
@@ -23,6 +24,7 @@ public extension UIApplication {
             self.shared.isNetworkActivityIndicatorVisible = activityCount > 0
         }
     }
+	#endif
     
     static var appVersionString: String {
         return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
